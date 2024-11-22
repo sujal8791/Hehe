@@ -2,17 +2,21 @@ import tkinter as tk
 import math
 import time
 
-# Function to create the animated flower
+# Function to create the animated flower on the canvas
 def create_flower(canvas):
-    # Center of the flower
+    """
+    Creates a simple flower animation by drawing petals and a center on the canvas.
+    The flower consists of 6 petals and an orange center.
+    """
+    # Center coordinates of the flower
     center_x = 250
     center_y = 250
-    petal_length = 60
-    petal_width = 20
+    petal_length = 60  # Length of each petal
+    petal_width = 20   # Width of each petal
 
     # Number of petals
     num_petals = 6
-    petal_angle = 360 / num_petals
+    petal_angle = 360 / num_petals  # Angle between each petal
 
     # Draw the flower's petals
     petals = []
@@ -24,14 +28,18 @@ def create_flower(canvas):
         petal_x2 = center_x + petal_width * math.cos(angle + math.radians(petal_angle / 2))
         petal_y2 = center_y + petal_width * math.sin(angle + math.radians(petal_angle / 2))
         
+        # Draw two lines for each petal
         petals.append(canvas.create_line(center_x, center_y, petal_x1, petal_y1, width=3, fill="yellow"))
         petals.append(canvas.create_line(center_x, center_y, petal_x2, petal_y2, width=3, fill="yellow"))
         
-    # Create the center of the flower
+    # Draw the center of the flower
     canvas.create_oval(center_x-15, center_y-15, center_x+15, center_y+15, fill="orange", outline="orange")
 
-# Function to show second slide with animation
+# Function to show the second slide with a simple animation
 def show_second_slide(frame):
+    """
+    Clears the current frame, then shows a paragraph about waterfalls and an animated flower.
+    """
     # Clear the current slide
     for widget in frame.winfo_children():
         widget.destroy()
@@ -40,23 +48,26 @@ def show_second_slide(frame):
     label = tk.Label(frame, text="How beautiful waterfalls are.\nThey are a sight of natural beauty,\noften creating a sense of tranquility and wonder.", font=("Arial", 14), justify="center")
     label.pack(pady=20)
 
-    # Create canvas for animated flower
+    # Create canvas for the animated flower
     canvas = tk.Canvas(frame, width=500, height=500, bg="black")
     canvas.pack()
 
-    # Animate the flower (just a simple one-time drawing here)
+    # Animate the flower (simple one-time drawing here)
     create_flower(canvas)
 
-    # Adding some simple animations (a delay before showing the flower)
+    # Adding a simple delay before showing the flower
     time.sleep(0.5)  # Wait before showing the flower
     canvas.after(500, lambda: canvas.update())
 
-# Function to show the first slide
+# Function to show the first slide with text and a button
 def show_first_slide(root):
+    """
+    Creates and displays the first slide with a welcome message and a button to open the second slide.
+    """
     frame = tk.Frame(root, width=500, height=500, bg="skyblue")
     frame.pack()
 
-    # Add text on the first slide
+    # Add text to the first slide
     label = tk.Label(frame, text="HELLO THERE\nIM STAR", font=("Arial", 30, "bold"), fg="black")
     label.pack(pady=150)
 
@@ -64,13 +75,21 @@ def show_first_slide(root):
     open_button = tk.Button(frame, text="Open this", font=("Arial", 14), command=lambda: show_second_slide(frame))
     open_button.pack(pady=20)
 
-# Set up the main window
-root = tk.Tk()
-root.title("Animated Flower Slide Show")
-root.geometry("500x500")
+# Set up the main window for the Tkinter application
+def main():
+    """
+    Initializes the Tkinter application window and starts the slide show.
+    """
+    root = tk.Tk()
+    root.title("Animated Flower Slide Show")
+    root.geometry("500x500")
 
-# Show the first slide
-show_first_slide(root)
+    # Show the first slide
+    show_first_slide(root)
 
-# Start the Tkinter event loop
-root.mainloop()
+    # Start the Tkinter event loop
+    root.mainloop()
+
+# Run the application
+if __name__ == "__main__":
+    main()
